@@ -4,14 +4,13 @@ FROM php:8.0-apache
 # Install necessary extensions and dependencies
 RUN apt-get update && apt-get install -y \
     libpng-dev \
-    libjpeg-dev \
+    libjpeg62-turbo-dev \
     libfreetype6-dev \
-    libzip-dev \
-    zip \
     unzip \
-    && docker-php-ext-configure gd \
-    && docker-php-ext-install gd \
-    && docker-php-ext-install zip pdo_mysql
+    git \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install gd pdo pdo_mysql
+
 
 # Enable Apache mod_rewrite for Laravel
 RUN a2enmod rewrite
